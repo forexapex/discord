@@ -310,7 +310,7 @@ async function handleTicketClose(interaction, client) {
     .setColor('#FFD700')
     .setTitle('⭐ Rate Your Support Experience')
     .setDescription('Please rate your support experience from 1-5 stars:\n\n⭐ = 1 star\n⭐⭐ = 2 stars\n⭐⭐⭐ = 3 stars\n⭐⭐⭐⭐ = 4 stars\n⭐⭐⭐⭐⭐ = 5 stars\n\nReact with the number of stars!')
-    .setFooter({ text: 'This channel will close in 30 seconds' });
+    .setFooter({ text: 'Channel will close after rating or in 15 seconds' });
 
   const ratingMsg = await interaction.editReply({ embeds: [embed] });
 
@@ -324,7 +324,7 @@ async function handleTicketClose(interaction, client) {
     return ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣'].includes(reaction.emoji.name) && user.id === ticketData[channelId].userId;
   };
 
-  const collected = await ratingMsg.awaitReactions({ filter, max: 1, time: 30000 }).catch(() => null);
+  const collected = await ratingMsg.awaitReactions({ filter, max: 1, time: 15000 }).catch(() => null);
 
   const stats = JSON.parse(fs.readFileSync('./data/stats.json', 'utf8'));
   stats.totalClosed = (stats.totalClosed || 0) + 1;
@@ -341,6 +341,14 @@ async function handleTicketClose(interaction, client) {
       ticketType: ticketData[channelId].type,
       timestamp: Date.now() 
     });
+    
+    const thankYouEmbed = new EmbedBuilder()
+      .setColor('#00FF00')
+      .setTitle('✅ Thank You!')
+      .setDescription(`Thanks for rating your experience with ${rating} stars!\n\nThis ticket will close in a moment...`)
+      .setTimestamp();
+    
+    await ratingMsg.edit({ embeds: [thankYouEmbed] }).catch(() => {});
   }
   
   fs.writeFileSync('./data/stats.json', JSON.stringify(stats, null, 2));
@@ -421,6 +429,8 @@ async function handleTicketClose(interaction, client) {
   fs.writeFileSync('./data/tickets.json', JSON.stringify(ticketData, null, 2));
 
   setTimeout(async () => {
-    await interaction.channel.delete();
-  }, 5000);
+    await interaction.channel.delete().catch(err => {
+      console.log('Could not delete channel:', err.message);
+    });
+  }, 2000);
 }

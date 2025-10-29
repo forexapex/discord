@@ -2,16 +2,30 @@ const { setupTicketPanel, setupGameRolesPanel, cleanOldBotMessages } = require('
 const fs = require('fs');
 
 module.exports = {
-  name: 'ready',
+  name: 'clientReady',
   once: true,
   async execute(client) {
     console.log(`✅ Bot is online as ${client.user.tag}`);
     console.log(`🎮 Serving ${client.guilds.cache.size} server(s)`);
     client.user.setActivity('SG ESPORTS Support', { type: 'WATCHING' });
 
-    const guild = client.guilds.cache.get(client.config.guildId);
+    const guildId = client.config.guildId?.trim();
+    
+    if (!guildId) {
+      console.log('⚠️  GUILD_ID not configured');
+      console.log('⚠️  Bot will continue running, but auto-setup is skipped');
+      console.log('⚠️  You can manually run /setup-ticket and /setup-gameroles commands');
+      return;
+    }
+    
+    console.log('Looking for guild ID:', guildId);
+    console.log('Available guilds:', client.guilds.cache.map(g => `${g.name} (${g.id})`).join(', '));
+    
+    const guild = client.guilds.cache.get(guildId);
     if (!guild) {
-      console.log('⚠️  Could not find guild');
+      console.log('⚠️  Could not find guild with ID:', guildId);
+      console.log('⚠️  Bot will continue running, but auto-setup is skipped');
+      console.log('⚠️  You can manually run /setup-ticket and /setup-gameroles commands');
       return;
     }
 

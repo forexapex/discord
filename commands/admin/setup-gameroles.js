@@ -6,27 +6,27 @@ module.exports = {
     .setDescription('Set up the game role selection panel')
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
   async execute(interaction, client) {
+    const getEmoji = (name, fallback) => {
+      const emoji = interaction.guild.emojis.cache.find(e => e.name === name);
+      return emoji ? `<:${emoji.name}:${emoji.id}>` : fallback;
+    };
+
     const embed = new EmbedBuilder()
       .setColor('#FF6B6B')
       .setTitle('🎮 Game Roles')
       .setDescription(
         'Click the buttons below to toggle your game roles!\n\n' +
         '**Available Games:**\n' +
-        '• Valorant\n' +
-        '• Battleground Mobile India\n' +
-        '• Counter Strike: Global Offensive\n' +
-        '• Call of Duty Mobile\n' +
-        '• Apex Legends\n' +
-        '• Mobile Legends Bang Bang\n\n' +
+        `${getEmoji('valorant', '🔥')} Valorant\n` +
+        `${getEmoji('bgmi', '🎯')} Battleground Mobile India\n` +
+        `${getEmoji('csgo', '💣')} Counter Strike: Global Offensive\n` +
+        `${getEmoji('codm', '🎖️')} Call of Duty Mobile\n` +
+        `${getEmoji('ApexLegends', '🏆')} Apex Legends\n` +
+        `${getEmoji('mlbb', '⚔️')} Mobile Legends Bang Bang\n\n` +
         'Click a button to add or remove that game role!'
       )
       .setFooter({ text: 'SG ESPORTS' })
       .setTimestamp();
-
-    const getEmoji = (name, fallback) => {
-      const emoji = interaction.guild.emojis.cache.find(e => e.name === name);
-      return emoji ? emoji.identifier : fallback;
-    };
 
     const row1 = new ActionRowBuilder()
       .addComponents(
