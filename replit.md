@@ -34,6 +34,8 @@ A feature-rich Discord bot built for SG ESPORTS with support ticket management, 
 - **NEW: Auto-setup on startup** - Panels automatically post to designated channels
 - **NEW: Ticket restoration** - Open tickets reconnect when bot restarts
 - **NEW: Smart cleanup** - Old bot messages removed before posting new panels
+- **UPDATED: Game role system** - Changed from dropdown to interactive buttons with custom emoji support
+- **UPDATED: Game list** - Added Mobile Legends Bang Bang, updated to 6 games with custom server emojis
 
 ## Project Architecture
 
@@ -54,9 +56,18 @@ A feature-rich Discord bot built for SG ESPORTS with support ticket management, 
 
 ### Key Features
 1. **Support Tickets**: Dropdown menu with 4 categories (Billing, Account, General, Report)
-2. **Game Roles**: Multi-select dropdown for 7 games (Valorant, BGMI, CS:GO, COD, Apex, R6, LoL)
+2. **Game Roles**: Toggle buttons with custom emojis for 6 games (Valorant, BGMI, CS:GO, CODM, Apex Legends, Mobile Legends Bang Bang)
 3. **Ticket Management**: Claim, close, transcripts, feedback
 4. **Statistics**: Rating tracking and performance metrics
+
+### Custom Emoji Requirements
+The game role buttons use custom Discord emojis that must be uploaded to your server:
+- `valorant` - Valorant game logo
+- `bgmi` - Battleground Mobile India logo
+- `csgo` - Counter Strike: Global Offensive logo
+- `codm` - Call of Duty Mobile logo
+- `ApexLegends` - Apex Legends logo
+- `mlbb` - Mobile Legends Bang Bang logo
 
 ## Dependencies
 - discord.js ^14.24.1

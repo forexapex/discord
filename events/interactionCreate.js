@@ -35,6 +35,8 @@ module.exports = {
         await handleTicketClaim(interaction, client);
       } else if (interaction.customId === 'close_ticket') {
         await handleTicketClose(interaction, client);
+      } else if (interaction.customId.startsWith('game_')) {
+        await handleGameRoleButton(interaction, client);
       }
     }
   },
@@ -201,6 +203,50 @@ async function handleGameRoleSelection(interaction, client) {
   } catch (error) {
     console.error('Error assigning game roles:', error);
     await interaction.editReply({ content: '❌ Failed to assign roles. Please contact an administrator.' });
+  }
+}
+
+async function handleGameRoleButton(interaction, client) {
+  const gameId = interaction.customId.replace('game_', '');
+  const member = interaction.member;
+
+  const gameRoles = {
+    'valorant': 'Valorant',
+    'bgmi': 'BGMI',
+    'csgo': 'CS:GO',
+    'codm': 'Call of Duty Mobile',
+    'apex': 'Apex Legends',
+    'mlbb': 'Mobile Legends Bang Bang'
+  };
+
+  await interaction.deferReply({ ephemeral: true });
+
+  try {
+    const guild = interaction.guild;
+    const roleName = gameRoles[gameId];
+    
+    let role = guild.roles.cache.find(r => r.name === roleName);
+
+    if (!role) {
+      role = await guild.roles.create({
+        name: roleName,
+        color: 'Random',
+        reason: 'Game role for button selection'
+      });
+    }
+
+    const hasRole = member.roles.cache.has(role.id);
+
+    if (hasRole) {
+      await member.roles.remove(role);
+      await interaction.editReply({ content: `✅ Removed the **${roleName}** role!` });
+    } else {
+      await member.roles.add(role);
+      await interaction.editReply({ content: `✅ Added the **${roleName}** role!` });
+    }
+  } catch (error) {
+    console.error('Error toggling game role:', error);
+    await interaction.editReply({ content: '❌ Failed to toggle role. Please contact an administrator.' });
   }
 }
 
