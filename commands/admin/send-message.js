@@ -53,7 +53,6 @@ module.exports = {
         .setTitle(title)
         .setDescription(message)
         .setColor('#5865F2')
-        .setThumbnail(botAvatarURL)
         .setTimestamp()
         .setFooter({ text: `Posted by ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() });
 
