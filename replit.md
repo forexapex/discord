@@ -20,7 +20,7 @@ A feature-rich Discord bot built for SG ESPORTS with support ticket management, 
 - ✅ Admin commands for panel setup
 - ✅ Statistics tracking
 
-## Recent Changes (October 29, 2025)
+## Recent Changes (October 30, 2025)
 - Created complete Discord bot infrastructure
 - Implemented support ticket system matching user's design requirements
 - Added game role selection with dropdown menu
@@ -36,6 +36,9 @@ A feature-rich Discord bot built for SG ESPORTS with support ticket management, 
 - **NEW: Smart cleanup** - Old bot messages removed before posting new panels
 - **UPDATED: Game role system** - Changed from dropdown to interactive buttons with custom emoji support
 - **UPDATED: Game list** - Added Mobile Legends Bang Bang, updated to 6 games with custom server emojis
+- **NEW: Announcement Command** - Added `/announcement` command for admins to post announcements with title, message, optional image, and custom color
+- **NEW: Simplified Ubuntu Deployment** - Added quick start deployment guide for Ubuntu/Debian systems
+- **CONFIGURED: Replit Setup** - Bot now runs successfully on Replit with proper configuration
 
 ## Project Architecture
 
@@ -59,6 +62,7 @@ A feature-rich Discord bot built for SG ESPORTS with support ticket management, 
 2. **Game Roles**: Toggle buttons with custom emojis for 6 games (Valorant, BGMI, CS:GO, CODM, Apex Legends, Mobile Legends Bang Bang)
 3. **Ticket Management**: Claim, close, transcripts, feedback
 4. **Statistics**: Rating tracking and performance metrics
+5. **Announcements**: Admin-only command to post formatted announcements to any channel
 
 ### Custom Emoji Requirements
 The game role buttons use custom Discord emojis that must be uploaded to your server:
@@ -74,11 +78,25 @@ The game role buttons use custom Discord emojis that must be uploaded to your se
 - Node.js 20
 
 ## Configuration Required
-User needs to provide:
-- Discord bot token
-- Client ID and Guild ID
-- Channel/Category IDs for tickets
-- Role IDs for support staff
+The bot uses `config.json` for configuration (or environment variables). Required settings:
+- `DISCORD_TOKEN` - Bot token from Discord Developer Portal
+- `CLIENT_ID` - Bot's application/client ID
+- `GUILD_ID` - Discord server ID
+- `TICKET_CATEGORY_ID` - Category for ticket channels
+- `LOG_CHANNEL_ID` - Channel for logging
+- `TRANSCRIPT_CHANNEL_ID` - Channel for ticket transcripts
+- `SUPPORT_ROLE_ID` - Support team role ID
+- `ADMIN_ROLE_ID` - Administrator role ID
+- `TICKET_CHANNEL_ID` - Channel for ticket panel
+- `REACTION_ROLE_CHANNEL_ID` - Channel for game roles panel
+
+## Commands Available
+1. `/setup-ticket` - Create ticket panel (auto-runs on startup)
+2. `/setup-gameroles` - Create game roles panel (auto-runs on startup)
+3. `/stats` - View support statistics
+4. `/add` - Add user to ticket
+5. `/remove` - Remove user from ticket
+6. `/announcement` - Post announcement (Admin only)
 
 ## Setup Notes
 - Bot requires privileged intents (Server Members, Message Content)

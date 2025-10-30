@@ -43,6 +43,13 @@ A comprehensive Discord bot for managing support tickets, reaction roles, and ga
 - `/stats` - View support ticket statistics
 - `/add` - Add a user to a ticket
 - `/remove` - Remove a user from a ticket
+- `/announcement` - Post announcements to any channel (Admin only)
+  - **Parameters**: 
+    - `channel` - Target channel for the announcement
+    - `title` - Announcement title
+    - `message` - Announcement content
+    - `image` - Optional image URL
+    - `color` - Optional embed color (hex format, e.g., #FF0000)
 
 ## Setup Instructions
 
@@ -187,7 +194,67 @@ You can also manually create panels anywhere using slash commands:
 └── config.json        # Configuration
 ```
 
-## 🌐 AWS Deployment Guide
+## 🌐 Deployment Guide
+
+### Quick Ubuntu/Debian Deployment
+
+**Step 1: Install Node.js**
+```bash
+# Update system
+sudo apt update && sudo apt upgrade -y
+
+# Install Node.js 20.x
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt install -y nodejs git
+
+# Verify installation
+node --version && npm --version
+```
+
+**Step 2: Clone/Upload Your Bot**
+```bash
+# If using git
+git clone your-repository-url sg-bot
+cd sg-bot
+
+# Or upload files manually and navigate to the folder
+cd sg-bot
+```
+
+**Step 3: Configure & Run**
+```bash
+# Install dependencies
+npm install
+
+# Edit config.json with your Discord credentials
+nano config.json
+# (Add your token, client ID, guild ID, and all channel/role IDs)
+
+# Deploy commands to Discord
+node deploy-commands.js
+
+# Start bot (or use PM2 for persistent running - see below)
+npm start
+```
+
+**Step 4: Keep Bot Running with PM2 (Recommended)**
+```bash
+# Install PM2
+sudo npm install -g pm2
+
+# Start bot
+pm2 start index.js --name "sg-bot"
+
+# Make it start on system boot
+pm2 startup
+pm2 save
+
+# Useful PM2 commands:
+pm2 status              # Check bot status
+pm2 logs sg-bot         # View logs
+pm2 restart sg-bot      # Restart bot
+pm2 stop sg-bot         # Stop bot
+```
 
 ### Deploy on AWS EC2 (Amazon Linux 2 / Ubuntu)
 
