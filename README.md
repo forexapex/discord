@@ -53,6 +53,7 @@ A comprehensive Discord bot for managing support tickets, reaction roles, and ga
 - `/send-message` - Send a message to any channel (Admin only)
   - **Parameters**:
     - `channel` - Target channel for the message
+    - `title` - Message title
     - `message` - The message text to send
     - `tag-user` - Optional: Tag/mention a user in the message
     - `image` - Optional: Image URL to attach

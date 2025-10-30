@@ -45,12 +45,17 @@ module.exports = {
     const colorHex = interaction.options.getString('color');
 
     try {
+      const botAvatarURL = interaction.client.user.displayAvatarURL({ dynamic: true, size: 256 });
+      const botName = interaction.client.user.username;
+
       const embed = new EmbedBuilder()
+        .setAuthor({ name: botName, iconURL: botAvatarURL })
         .setTitle(title)
         .setDescription(message)
         .setColor(colorHex || '#5865F2')
+        .setThumbnail(botAvatarURL)
         .setTimestamp()
-        .setFooter({ text: `Posted by ${interaction.user.tag}` });
+        .setFooter({ text: `Posted by ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() });
 
       if (imageUrl) {
         embed.setImage(imageUrl);

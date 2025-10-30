@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionFlagsBits, ChannelType } = require('discord.js');
+const { SlashCommandBuilder, PermissionFlagsBits, ChannelType, EmbedBuilder } = require('discord.js');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -8,6 +8,10 @@ module.exports = {
       option.setName('channel')
         .setDescription('The channel to send the message to')
         .addChannelTypes(ChannelType.GuildText)
+        .setRequired(true))
+    .addStringOption(option =>
+      option.setName('title')
+        .setDescription('Message title')
         .setRequired(true))
     .addStringOption(option =>
       option.setName('message')
@@ -35,23 +39,34 @@ module.exports = {
     }
 
     const targetChannel = interaction.options.getChannel('channel');
+    const title = interaction.options.getString('title');
     const message = interaction.options.getString('message');
     const taggedUser = interaction.options.getUser('tag-user');
     const imageUrl = interaction.options.getString('image');
 
     try {
-      let messageContent = message;
-      
-      if (taggedUser) {
-        messageContent = `${taggedUser} ${message}`;
+      const botAvatarURL = interaction.client.user.displayAvatarURL({ dynamic: true, size: 256 });
+      const botName = interaction.client.user.username;
+
+      const embed = new EmbedBuilder()
+        .setAuthor({ name: botName, iconURL: botAvatarURL })
+        .setTitle(title)
+        .setDescription(message)
+        .setColor('#5865F2')
+        .setThumbnail(botAvatarURL)
+        .setTimestamp()
+        .setFooter({ text: `Posted by ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() });
+
+      if (imageUrl) {
+        embed.setImage(imageUrl);
       }
 
       const messageOptions = {
-        content: messageContent
+        embeds: [embed]
       };
 
-      if (imageUrl) {
-        messageOptions.files = [imageUrl];
+      if (taggedUser) {
+        messageOptions.content = `${taggedUser}`;
       }
 
       await targetChannel.send(messageOptions);
