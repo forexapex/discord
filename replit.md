@@ -97,6 +97,7 @@ The bot uses `config.json` for configuration (or environment variables). Require
 4. `/add` - Add user to ticket
 5. `/remove` - Remove user from ticket
 6. `/announcement` - Post announcement (Admin only)
+7. `/send-message` - Send message to any channel with optional user tag and image (Admin only)
 
 ## Setup Notes
 - Bot requires privileged intents (Server Members, Message Content)

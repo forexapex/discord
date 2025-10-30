@@ -50,6 +50,12 @@ A comprehensive Discord bot for managing support tickets, reaction roles, and ga
     - `message` - Announcement content
     - `image` - Optional image URL
     - `color` - Optional embed color (hex format, e.g., #FF0000)
+- `/send-message` - Send a message to any channel (Admin only)
+  - **Parameters**:
+    - `channel` - Target channel for the message
+    - `message` - The message text to send
+    - `tag-user` - Optional: Tag/mention a user in the message
+    - `image` - Optional: Image URL to attach
 
 ## Setup Instructions
 
