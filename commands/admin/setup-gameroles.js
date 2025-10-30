@@ -32,17 +32,14 @@ module.exports = {
       .addComponents(
         new ButtonBuilder()
           .setCustomId('game_valorant')
-          .setLabel('VALORANT')
           .setStyle(ButtonStyle.Primary)
           .setEmoji(getEmoji('valorant', '🔥')),
         new ButtonBuilder()
           .setCustomId('game_bgmi')
-          .setLabel('BGMI')
           .setStyle(ButtonStyle.Primary)
           .setEmoji(getEmoji('bgmi', '🎯')),
         new ButtonBuilder()
           .setCustomId('game_csgo')
-          .setLabel('CS:GO')
           .setStyle(ButtonStyle.Primary)
           .setEmoji(getEmoji('csgo', '💣'))
       );
@@ -51,17 +48,14 @@ module.exports = {
       .addComponents(
         new ButtonBuilder()
           .setCustomId('game_codm')
-          .setLabel('Call of Duty Mobile')
           .setStyle(ButtonStyle.Primary)
           .setEmoji(getEmoji('codm', '🎖️')),
         new ButtonBuilder()
           .setCustomId('game_apex')
-          .setLabel('Apex Legends')
           .setStyle(ButtonStyle.Primary)
           .setEmoji(getEmoji('ApexLegends', '🏆')),
         new ButtonBuilder()
           .setCustomId('game_mlbb')
-          .setLabel('Mobile Legends')
           .setStyle(ButtonStyle.Primary)
           .setEmoji(getEmoji('mlbb', '⚔️'))
       );
